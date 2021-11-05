@@ -2,10 +2,11 @@ package com.yuancheng.petclinic.services.map;
 
 import com.yuancheng.petclinic.models.Vet;
 import com.yuancheng.petclinic.services.CrudService;
+import com.yuancheng.petclinic.services.VetService;
 
 import java.util.Set;
 
-public class VetServiceMap extends AbstractMapService<Vet, Long> implements CrudService<Vet, Long> {
+public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetService {
   @Override
   public Set<Vet> findAll() {
     return super.findAll();
