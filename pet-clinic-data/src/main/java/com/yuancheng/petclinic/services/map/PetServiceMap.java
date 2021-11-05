@@ -1,11 +1,12 @@
 package com.yuancheng.petclinic.services.map;
 
 import com.yuancheng.petclinic.models.Pet;
-import com.yuancheng.petclinic.services.CrudService;
 import com.yuancheng.petclinic.services.PetService;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class PetServiceMap extends AbstractMapService<Pet, Long> implements PetService {
 
   @Override
