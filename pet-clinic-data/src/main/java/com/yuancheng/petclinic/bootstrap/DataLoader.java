@@ -1,10 +1,7 @@
 package com.yuancheng.petclinic.bootstrap;
 
 import com.yuancheng.petclinic.models.*;
-import com.yuancheng.petclinic.services.OwnerService;
-import com.yuancheng.petclinic.services.PetTypeService;
-import com.yuancheng.petclinic.services.SpecialityService;
-import com.yuancheng.petclinic.services.VetService;
+import com.yuancheng.petclinic.services.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -16,12 +13,16 @@ public class DataLoader implements CommandLineRunner {
   private final VetService vetService;
   private final PetTypeService petTypeService;
   private final SpecialityService specialityService;
+  private final VisitService visitService;
+  private final PetService petService;
 
-  public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialityService specialityService) {
+  public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialityService specialityService, VisitService visitService, PetService petService) {
     this.ownerService = ownerService;
     this.vetService = vetService;
     this.petTypeService = petTypeService;
     this.specialityService = specialityService;
+    this.visitService = visitService;
+    this.petService = petService;
   }
 
   @Override
@@ -103,6 +104,7 @@ public class DataLoader implements CommandLineRunner {
     yuansPet.setBirthDate(LocalDate.now());
     yuansPet.setName("Dudu");
     owner1.getPets().add(yuansPet);
+    petService.save(yuansPet);
 
     Pet nancysPet = new Pet();
     nancysPet.setOwner(owner2);
@@ -110,6 +112,15 @@ public class DataLoader implements CommandLineRunner {
     nancysPet.setBirthDate(LocalDate.now());
     nancysPet.setName("another cat");
     owner2.getPets().add(nancysPet);
+    petService.save(nancysPet);
     /* End creating Pets */
+
+    /* Create Visit */
+    Visit catVisit = new Visit();
+    catVisit.setDate(LocalDate.now());
+    catVisit.setDescription("Sneezy Cat");
+    catVisit.setPet(nancysPet);
+    visitService.save(catVisit);
+    /* End creating Visits */
   }
 }
