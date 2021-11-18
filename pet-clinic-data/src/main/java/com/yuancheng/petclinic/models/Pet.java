@@ -22,7 +22,7 @@ public class Pet extends BaseEntity{
     this.name = name;
     this.owner = owner;
     this.petType = petType;
-    this.visits = visits;
+    if (visits != null) { this.visits = visits; }
   }
 
   @Column(name = "birth_date")
