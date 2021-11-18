@@ -52,6 +52,8 @@ public class PetController {
   public String initCreationForm(Owner owner, Model model) {
     Pet pet = new Pet();
     owner.getPets().add(pet);
+    // view need to show Owner's firstName and lastName, we are not adding Owner attribute to the Model,
+    // so we need to set Pet's Owner property in order to display Owner's property
     pet.setOwner(owner);
     model.addAttribute("pet", pet);
     return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
