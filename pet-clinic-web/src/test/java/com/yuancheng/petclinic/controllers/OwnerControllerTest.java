@@ -16,7 +16,7 @@ import org.springframework.ui.Model;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -84,5 +84,18 @@ class OwnerControllerTest {
 
     Set<Owner> capturedOwners = argumentCaptor.getValue();
     assertEquals(expectedOwners.size(), capturedOwners.size());
+  }
+
+  @Test
+  void displayOwner() throws Exception {
+    // when
+    when(ownerService.findById(anyLong())).thenReturn(Owner.builder().id(3L).build());
+
+    // then
+    mockMvc.perform(get("/owners/3"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("/owners/ownerDetails"))
+            .andExpect(model().attributeExists("owner"))
+            .andExpect(model().attribute("owner", hasProperty("id", is(3L))));
   }
 }
