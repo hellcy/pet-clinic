@@ -18,10 +18,25 @@
     <name>pet-clinic</name>
     <description>pet-clinic</description>
     <properties>
+        <jaxb.version>2.3.0</jaxb.version>
         <java.version>11</java.version>
     </properties>
     <dependencies>
-
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>${jaxb.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-core</artifactId>
+            <version>${jaxb.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>${jaxb.version}</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
