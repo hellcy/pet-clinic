@@ -78,13 +78,32 @@ class PetControllerTest {
     when(petTypeService.findAll()).thenReturn(petTypes);
 
     // then
-    mockMvc.perform(post("/owners/1/pets/new"))
+    mockMvc.perform(post("/owners/1/pets/new")
+                    .param("name", "pet name")
+                    .param("birthDate", "2020-12-31"))
             .andExpect(status().is3xxRedirection())
             .andExpect(view().name("redirect:/owners/1"))
             .andExpect(model().attributeExists("types"))
             .andExpect(model().attributeExists("pet"));
 
     verify(petService, times(1)).save(any());
+  }
+
+  @Test
+  void processCreationFormUnhappyPath() throws Exception{
+    // when
+    when(ownerService.findById(anyLong())).thenReturn(owner);
+    when(petTypeService.findAll()).thenReturn(petTypes);
+
+    // then
+    mockMvc.perform(post("/owners/1/pets/new")
+                    .param("name", "pet name")
+                    .param("birthDate", "2020-20-05"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("/pets/createOrUpdatePetForm"))
+            .andExpect(model().attributeExists("types"))
+            .andExpect(model().attributeExists("pet"));
+    verifyNoInteractions(petService);
   }
 
   @Test
