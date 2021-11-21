@@ -1,6 +1,8 @@
 package com.yuancheng.petclinic.controllers;
 
 import com.yuancheng.petclinic.models.Owner;
+import com.yuancheng.petclinic.models.Person;
+import com.yuancheng.petclinic.models.Pet;
 import com.yuancheng.petclinic.services.OwnerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,7 +46,7 @@ public class OwnerController {
   }
 
   @GetMapping
-  public String processFindForm(Owner owner, BindingResult bindingResult, Model model) {
+  public String processFindForm(Owner owner, Person person, Pet pet, Model model) {
     // allow parameterless GET request for /owners to return all records
     if (owner.getLastName() == null) {
       owner.setLastName(""); // empty String signifies the broadest possible search
@@ -54,7 +56,7 @@ public class OwnerController {
     List<Owner> results = ownerService.findAllByLastNameLike("%" + owner.getLastName() + "%");
     if (results.isEmpty()) {
       // no owners found
-      bindingResult.rejectValue("lastName", "notFound", "not found");
+      //bindingResult.rejectValue("lastName", "notFound", "not found");
       return "owners/findOwners";
     } else if (results.size() == 1) {
       // one owner found
